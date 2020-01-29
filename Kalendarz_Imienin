@@ -1,0 +1,32 @@
+import requests
+import json
+
+
+IMIĘ = str(input('Proszę wpisać imię: '))
+response = requests.get('https://api.abalin.net/getdate?name=' +IMIĘ+'&country=pl') # Znalazłam przydatne API ze spisem imienin
+PUSTY = requests.get('https://api.abalin.net/today?country=pl')  # Dodatkowo jest mozliwość zmiany państwa wyszukiwania
+
+def kalendarz():
+    
+    if IMIĘ:          
+        rezultat = response.json()['results']
+        day = []
+        mont = []
+        for days in rezultat:
+            dzień = days['day']
+            miesiac = days['month']
+            day.append(dzień)
+            mont.append(miesiac)
+
+        wyświetlanie = ["{}.{}".format(d1, m1) for d1, m1 in zip(day, mont)]
+        return wyświetlanie
+    
+    elif not IMIĘ:
+        PUSTY = requests.get('https://api.abalin.net/today?country=pl')
+        resul = PUSTY.json()['data']
+        for names in resul:
+            dzień = names['namedays']
+            b = [*dzień.values()]
+            return b 
+
+print(kalendarz())
