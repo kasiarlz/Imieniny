@@ -26,6 +26,14 @@ for character in IMIE:
         IMIE = IMIE.replace('ć', 'c')
     elif character == 'ń':
         IMIE = IMIE.replace('ń', 'n')   
+    elif character == 'Ł':
+        IMIE = IMIE.replace('Ł', 'l')
+    elif character == 'Ś':
+        IMIE = IMIE.replace('Ś', 's')
+    elif character == 'Ż':
+        IMIE = IMIE.replace('Ż', 'z')
+    elif character == 'Ź':
+        IMIE = IMIE.replace('Ź', 'z')
 RESPONSE = requests.get('https://www.kalbi.pl/imieniny-' + IMIE) 
 BEAUTY = BeautifulSoup(RESPONSE.content, 'html.parser')
 
