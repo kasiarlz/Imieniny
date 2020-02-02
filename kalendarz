@@ -1,0 +1,52 @@
+"""
+Python program for checking name days!
+"""
+
+import requests 
+from bs4 import BeautifulSoup
+
+
+IMIE = str(input('Proszę wpisz imię: '))
+for character in IMIE:
+    if character == 'ł':
+        IMIE = IMIE.replace('ł', 'l')
+    elif character == 'ę':
+        IMIE = IMIE.replace('ę', 'e')
+    elif character == 'ó':
+        IMIE = IMIE.replace('ó', 'o')
+    elif character == 'ą':
+        IMIE = IMIE.replace('ą', 'a')
+    elif character == 'ś':
+        IMIE = IMIE.replace('ś', 's')
+    elif character == 'ż':
+        IMIE = IMIE.replace('ż', 'z')
+    elif character == 'ź':
+        IMIE = IMIE.replace('ź', 'z')
+    elif character == 'ć':
+        IMIE = IMIE.replace('ć', 'c')
+    elif character == 'ń':
+        IMIE = IMIE.replace('ń', 'n')   
+RESPONSE = requests.get('https://www.kalbi.pl/imieniny-' + IMIE) 
+BEAUTY = BeautifulSoup(RESPONSE.content, 'html.parser')
+
+def kalendarz():
+    '''
+    Zrezygnowałam z API i dodałam troszeczkę scrapingu.
+    '''
+    if IMIE:
+        daty = BEAUTY.find_all(title='Kartka z kalendarza')
+        for dat in daty:
+            lis = dat.get_text()
+            print(lis)
+        if RESPONSE.status_code != 200:
+            print('Błędne imię')
+    if not IMIE:
+        page = requests.get('https://www.kalbi.pl/')
+        soup = BeautifulSoup(page.content, 'html.parser')
+        week = soup.find(class_='calCard-name-day').get_text()
+        imiona = week.split()
+        imiona = imiona[3:6]+imiona[7:-1]
+        imiona = '\n'.join(imiona)
+        print(imiona)
+
+kalendarz()
