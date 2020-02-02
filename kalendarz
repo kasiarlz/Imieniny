@@ -7,6 +7,10 @@ from bs4 import BeautifulSoup
 
 
 IMIE = str(input('Proszę wpisz imię: '))
+'''
+Przez brak możliwości dodania trzeciej biblioteki - unicodedata
+musiałam ręcznie zapisać warunki zmiany UTF-8 na ASCII
+'''
 for character in IMIE:
     if character == 'ł':
         IMIE = IMIE.replace('ł', 'l')
