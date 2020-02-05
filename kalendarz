@@ -57,7 +57,7 @@ def kalendarz():
         soup = BeautifulSoup(page.content, 'html.parser')
         week = soup.find(class_='calCard-name-day').get_text()
         imiona = week.split()
-        imiona = imiona[3:6]+imiona[7:-1]
+        imiona = imiona[3:5]+imiona[6:]
         imiona = '\n'.join(imiona)
         print(imiona)
 
